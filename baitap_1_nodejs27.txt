@@ -1,8 +1,8 @@
 #tạo database baitap_1_nodejs
-CREATE DATABASE baitap_1_nodejs
+CREATE DATABASE baitap_1_nodejs;
 
 #trỏ tới db
-USE baitap_1_nodejs
+USE baitap_1_nodejs;
 
 #Tạo bảng food_type
 CREATE TABLE food_type (
@@ -140,7 +140,7 @@ password
 'Gabrielle Durand',
 'gabrielle.durand@example.com',
 '1234'
-)
+);
 
 
 #thêm 4 nhà hàng vào bảng restaurant
@@ -167,7 +167,7 @@ description
 'Nhà hàng Cần Thơ',
 'nhahangcanthoimg',
 'Nhà hàng ở Cần Thơ'
-)
+);
 
 #thêm loại thức ăn vào food_type
 INSERT INTO food_type (
@@ -186,7 +186,7 @@ type_name
 ),
 (
 'CÁC MÓN GÀ'
-)
+);
 
 #thêm thức ăn vào bảng food
 INSERT INTO food (
@@ -250,7 +250,7 @@ type_id
 400000,
 'Gà nướng ngũ vị',
 4
-)
+);
 
 
 #thêm orders vào bảng orders
@@ -322,7 +322,7 @@ arr_sub_id
 4,
 'abc',
 'xyz'
-)
+);
 
 
 #thêm người vào bảng like_res
@@ -369,7 +369,7 @@ date_like
 9,
 3,
 '2008-10-29 14:56:59'
-)
+);
 
 #Thêm sub_food
 INSERT INTO sub_food (
@@ -448,26 +448,26 @@ food_id
 ('Tương ớt chấm chung',
 '8000',
 8
-)
+);
 
 
 #Câu 1: Tìm 5 người có số lượt like cao nhất
 SELECT full_name AS HỌ_VÀ_TÊN, email AS EMAIL, (SELECT COUNT(*) FROM like_res WHERE user_id = u.user_id) AS SỐ_LƯỢT_LIKE
 FROM users u
 ORDER BY SỐ_LƯỢT_LIKE DESC
-LIMIT 5
+LIMIT 5;
 
 #Câu 2: Tìm 2 nhà hàng có số lượt like cao nhất
 SELECT res_name AS TÊN_NHÀ_HÀNG, (SELECT COUNT(*) FROM like_res WHERE res_id = r.res_id) AS SỐ_LƯỢT_LIKE
 FROM restaurant r
 ORDER BY SỐ_LƯỢT_LIKE DESC
-LIMIT 2
+LIMIT 2;
 
 #Câu 3: Tìm người đã đặt hàng nhiều nhất
 SELECT full_name AS HỌ_VÀ_TÊN, (SELECT COUNT(*) FROM orders WHERE user_id = u.user_id) AS SỐ_LƯỢT_ORDER
 FROM users u
 ORDER BY SỐ_LƯỢT_ORDER DESC
-LIMIT 1
+LIMIT 1;
 
 #Câu 4: Tìm người dùng không hoạt động trong hệ thống
 SELECT 
@@ -478,9 +478,9 @@ full_name AS HỌ_VÀ_TÊN,
 FROM users u
 WHERE (SELECT COUNT(*) FROM orders WHERE user_id = u.user_id) = 0 AND
 (SELECT COUNT(*) FROM like_res WHERE user_id = u.user_id) = 0 AND
-(SELECT COUNT(*) FROM rate_res WHERE user_id = u.user_id) = 0
+(SELECT COUNT(*) FROM rate_res WHERE user_id = u.user_id) = 0;
 
 #Câu 5: Tính trung bình sub_food của mỗi món
 SELECT food_name AS TÊN_MÓN,
 (SELECT AVG(sub_price) FROM sub_food WHERE food_id = f.food_id) AS TRUNG_BÌNH_SUB_FOOD
-FROM food f
+FROM food f;
