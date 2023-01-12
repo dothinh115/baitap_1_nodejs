@@ -1,0 +1,486 @@
+#tạo database baitap_1_nodejs
+CREATE DATABASE baitap_1_nodejs
+
+#trỏ tới db
+USE baitap_1_nodejs
+
+#Tạo bảng food_type
+CREATE TABLE food_type (
+type_id INT PRIMARY KEY AUTO_INCREMENT,
+type_name VARCHAR(100)
+);
+
+#tạo bảng food
+CREATE TABLE food (
+food_id INT PRIMARY KEY AUTO_INCREMENT,
+food_name VARCHAR (100),
+image VARCHAR (200),
+price FLOAT,
+description VARCHAR (255),
+type_id INT,
+#tạo FK liên kết type_id với bảng food_type
+FOREIGN KEY (type_id) REFERENCES food_type(type_id)
+);
+
+#Tạo bảng sub_food
+CREATE TABLE sub_food (
+sub_id INT PRIMARY KEY AUTO_INCREMENT,
+sub_name VARCHAR (100),
+sub_price FLOAT,
+food_id INT,
+#tạo FK liên kết food_id với bảng food
+FOREIGN KEY (food_id) REFERENCES food(food_id)
+);
+
+#tạo bảng users
+CREATE TABLE users (
+user_id INT PRIMARY KEY AUTO_INCREMENT,
+full_name VARCHAR (100),
+email VARCHAR (150),
+password VARCHAR (100)
+);
+
+#tạo bảng orders
+CREATE TABLE orders (
+#tạo FK liên kết user_id với bảng user
+user_id INT,
+FOREIGN KEY (user_id) REFERENCES users(user_id),
+#tạo FK liên kết food_id với bảng food
+food_id INT,
+FOREIGN KEY (food_id) REFERENCES food(food_id),
+amount INT,
+code VARCHAR (50),
+arr_sub_id VARCHAR (100)
+);
+
+#tạo bảng restaurant
+CREATE TABLE restaurant (
+res_id INT PRIMARY KEY AUTO_INCREMENT,
+res_name VARCHAR(100),
+image VARCHAR (255),
+description VARCHAR (255)
+);
+
+#tạo bảng like_res
+CREATE TABLE like_res (
+#tạo FK liên kết user_id với bảng user
+user_id INT,
+FOREIGN KEY (user_id) REFERENCES users(user_id),
+#tạo FK liên kết res_id với bảng restaurant
+res_id INT,
+FOREIGN KEY (res_id) REFERENCES restaurant(res_id),
+date_like DATETIME
+);
+
+#tạo bảng rate_res
+CREATE TABLE rate_res (
+#tạo FK liên kết user_id với bảng user
+user_id INT,
+FOREIGN KEY (user_id) REFERENCES users(user_id),
+#tạo FK liên kết res_id với bảng restaurant
+res_id INT,
+FOREIGN KEY (res_id) REFERENCES restaurant(res_id),
+amount INT,
+date_rate DATETIME
+);
+
+
+
+#thêm 10 người vào table users
+INSERT INTO users (
+full_name,
+email,
+password
+) VALUES (
+'Jennie Nichols',
+'jennie.nichols@example.com',
+'1234'
+),
+(
+'Lucineide Lima',
+'lucineide.lima@example.com',
+'1234'
+),
+(
+'Daksh Bangera',
+'daksh.bangera@example.com',
+'1234'
+),
+(
+'Sofie Rasmussen',
+'sofie.rasmussen@example.com',
+'1234'
+),
+(
+'German Vicente',
+'german.vicente@example.com',
+'1234'
+),
+(
+'Logan David',
+'logan.david@example.com',
+'1234'
+),
+(
+'Veeti Sippola',
+'veeti.sippola@example.com',
+'1234'
+),
+(
+'Kim Terry',
+'kim.terry@example.com',
+'1234'
+),
+(
+'Fitan Patil',
+'fitan.patil@example.com',
+'1234'
+),
+(
+'Gabrielle Durand',
+'gabrielle.durand@example.com',
+'1234'
+)
+
+
+#thêm 4 nhà hàng vào bảng restaurant
+INSERT INTO restaurant (
+res_name,
+image,
+description
+) VALUES (
+'Nhà hàng HCM',
+'nhahanghcmimg',
+'Nhà hàng ở HCM'
+),
+(
+'Nhà hàng Hà Nội',
+'nhahanghnimg',
+'Nhà hàng ở Hà Nội'
+),
+(
+'Nhà hàng Huế',
+'nhahanghueimg',
+'Nhà hàng ở Huế'
+),
+(
+'Nhà hàng Cần Thơ',
+'nhahangcanthoimg',
+'Nhà hàng ở Cần Thơ'
+)
+
+#thêm loại thức ăn vào food_type
+INSERT INTO food_type (
+type_name
+) VALUES (
+'KHAI VỊ'
+),
+(
+'SÚP CÁC LOẠI'
+),
+(
+'RAU THEO MÙA'
+),
+(
+'NỘM VÀ SALAD'
+),
+(
+'CÁC MÓN GÀ'
+)
+
+#thêm thức ăn vào bảng food
+INSERT INTO food (
+food_name,
+image,
+price,
+description,
+type_id
+) VALUES (
+'Ngô chiên',
+'ngochienimg',
+40000,
+'Ngô chiên',
+1
+),
+(
+'Khoai chiên',
+'khoaichienimg',
+40000,
+'Khoai chiên',
+1
+),
+(
+'Súp cá hồi',
+'supcahoiimg',
+20000,
+'Súp cá hồi',
+2
+),
+(
+'Súp cua',
+'supcuaimg',
+25000,
+'Súp cua',
+2
+),
+(
+'Rau bí xào',
+'raubixaoimg',
+40000,
+'Rau bí xào',
+3
+),
+(
+'Rau muống xào',
+'raumuongxaoimg',
+40000,
+'Rau muống xào',
+3
+),
+(
+'Gà hấp lá chanh',
+'gahaplachanhimg',
+200000,
+'Gà hấp lá chanh',
+4
+),
+(
+'Gà nướng ngũ vị',
+'ganuongnguviimg',
+400000,
+'Gà nướng ngũ vị',
+4
+)
+
+
+#thêm orders vào bảng orders
+INSERT INTO orders (
+user_id,
+food_id,
+amount,
+code,
+arr_sub_id
+) VALUES (
+1,
+1,
+2,
+'abc',
+'xyz'
+),
+(
+2,
+2,
+1,
+'abc',
+'xyz'
+),
+(
+3,
+4,
+5,
+'abc',
+'xyz'
+),
+(
+5,
+1,
+1,
+'abc',
+'xyz'
+),
+(
+5,
+6,
+2,
+'abc',
+'xyz'
+),
+(
+6,
+8,
+1,
+'abc',
+'xyz'
+),
+(
+10,
+6,
+2,
+'abc',
+'xyz'
+),
+(
+8,
+3,
+2,
+'abc',
+'xyz'
+),
+(
+9,
+7,
+4,
+'abc',
+'xyz'
+)
+
+
+#thêm người vào bảng like_res
+INSERT INTO like_res (
+user_id,
+res_id,
+date_like
+) VALUES (
+1,
+1,
+'2008-10-29 14:56:59'
+),
+(
+2,
+1,
+'2008-10-29 14:56:59'
+),
+(
+3,
+2,
+'2008-10-29 14:56:59'
+),
+(
+5,
+3,
+'2008-10-29 14:56:59'
+),
+(
+6,
+4,
+'2008-10-29 14:56:59'
+),
+(
+10,
+4,
+'2008-10-29 14:56:59'
+),
+(
+8,
+4,
+'2008-10-29 14:56:59'
+),
+(
+9,
+3,
+'2008-10-29 14:56:59'
+)
+
+#Thêm sub_food
+INSERT INTO sub_food (
+sub_name,
+sub_price,
+food_id
+) VALUES (
+'Ngô chiên bị khét',
+'5000',
+1
+), 
+(
+'Súp cua bị khô',
+'15000',
+4
+),
+(
+'Khoai chưa chiên',
+'500000',
+2
+),
+(
+'Súp cá hồi nhúc nhích',
+'500',
+3
+),
+(
+'Rau bị xào ko bỏ rau bí',
+'999999',
+5
+),
+(
+'Rau muống xào nhưng đừng xào',
+'5000',
+1
+),
+(
+'Gà đen hấp lá chanh',
+'46000',
+7
+),
+(
+'Gà nướng ngũ vị 1 mặt',
+'50070',
+8
+), 
+(
+'Tương ớt chấm chung',
+'8000',
+1
+), 
+('Tương ớt chấm chung',
+'8000',
+2
+),
+('Tương ớt chấm chung',
+'8000',
+3
+),
+('Tương ớt chấm chung',
+'8000',
+4
+),
+('Tương ớt chấm chung',
+'8000',
+5
+),
+('Tương ớt chấm chung',
+'8000',
+6
+),
+('Tương ớt chấm chung',
+'8000',
+7
+),
+('Tương ớt chấm chung',
+'8000',
+8
+)
+
+
+#Câu 1: Tìm 5 người có số lượt like cao nhất
+SELECT full_name AS HỌ_VÀ_TÊN, email AS EMAIL, (SELECT COUNT(*) FROM like_res WHERE user_id = u.user_id) AS SỐ_LƯỢT_LIKE
+FROM users u
+ORDER BY SỐ_LƯỢT_LIKE DESC
+LIMIT 5
+
+#Câu 2: Tìm 2 nhà hàng có số lượt like cao nhất
+SELECT res_name AS TÊN_NHÀ_HÀNG, (SELECT COUNT(*) FROM like_res WHERE res_id = r.res_id) AS SỐ_LƯỢT_LIKE
+FROM restaurant r
+ORDER BY SỐ_LƯỢT_LIKE DESC
+LIMIT 2
+
+#Câu 3: Tìm người đã đặt hàng nhiều nhất
+SELECT full_name AS HỌ_VÀ_TÊN, (SELECT COUNT(*) FROM orders WHERE user_id = u.user_id) AS SỐ_LƯỢT_ORDER
+FROM users u
+ORDER BY SỐ_LƯỢT_ORDER DESC
+LIMIT 1
+
+#Câu 4: Tìm người dùng không hoạt động trong hệ thống
+SELECT 
+full_name AS HỌ_VÀ_TÊN, 
+(SELECT COUNT(*) FROM orders WHERE user_id = u.user_id) AS SỐ_LƯỢT_ORDER,
+(SELECT COUNT(*) FROM like_res WHERE user_id = u.user_id) AS SỐ_LƯỢT_LIKE,
+(SELECT COUNT(*) FROM rate_res WHERE user_id = u.user_id) AS SỐ_LƯỢT_RATE
+FROM users u
+WHERE (SELECT COUNT(*) FROM orders WHERE user_id = u.user_id) = 0 AND
+(SELECT COUNT(*) FROM like_res WHERE user_id = u.user_id) = 0 AND
+(SELECT COUNT(*) FROM rate_res WHERE user_id = u.user_id) = 0
+
+#Câu 5: Tính trung bình sub_food của mỗi món
+SELECT food_name AS TÊN_MÓN,
+(SELECT AVG(sub_price) FROM sub_food WHERE food_id = f.food_id) AS TRUNG_BÌNH_SUB_FOOD
+FROM food f
